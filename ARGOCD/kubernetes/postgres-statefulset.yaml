@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: budget-app-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budget-app-db
+  serviceName: "budget-app-db"
+  template:
+    metadata:
+      labels:
+        app: budget-app-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "Budgy_production"
+            - name: POSTGRES_USER
+              value: "Budgy"
+            - name: POSTGRES_PASSWORD
+              value: "redhat"
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

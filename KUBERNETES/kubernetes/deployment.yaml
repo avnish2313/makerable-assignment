@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budget-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budget-app
+  template:
+    metadata:
+      labels:
+        app: budget-app
+    spec:
+      containers:
+        - name: budget-app
+          image: avnish2313/budget-app-ruby:latest
+          command: ["rails", "server", "-b", "0.0.0.0"]
+          ports:
+            - containerPort: 3000
