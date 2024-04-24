@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-pipeline
+spec:
+  tasks:
+    - name: build
+      taskRef:
+        name: build-task
+      params:
+        - name: git-url
+          value: "https://github.com/avnish2313/budget-app-tekton.git"
+        - name: docker-image
+          value: "avnish2313/final:latest"

@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-task
+spec:
+  params:
+    - name: git-url
+      type: string
+    - name: docker-image
+      type: string
+  steps:
+    - name: git-clone
+      image: alpine/git
+      script: |
+        git clone $(params.git-url) /workspace/source
+    - name: docker-build
+      image: docker.io/library/docker
+      env:
+        - name: DOCKER_BUILDKIT
+          value: "1"
+      script: |
+        docker build -t $(params.docker-image) /workspace/source
+        docker push $(params.docker-image)
+  workspaces:
+    - name: source
