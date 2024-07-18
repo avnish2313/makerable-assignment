@@ -54,4 +54,8 @@ Before running this project, ensure you have the following installed:
 - Step 3: ArgoCD setup for GitOps deployment management
 - Step 4: Tekton pipelines for automated building and deployment
 
+## Command
+- docker run --name budget-app-db -e POSTGRES_DB=Budgy_production -e POSTGRES_USER=Budgy -e POSTGRES_PASSWORD=redhat -p 5432:5432 -d postgres
+- docker run -dit --rm -p 3000:3000 --name budget-app --link budget-app-db:db   -e Budgy_DATABASE_PASSWORD=redhat  
+
 
